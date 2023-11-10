@@ -1,11 +1,18 @@
 import Link from "next/link";
+import React from "react";
 
-export default function RestaurnatNavBar() {
+type Props = {
+  slug: string
+}
+
+
+export default function RestaurnatNavBar(props: Props) {
+    console.log(props, "slugg")
     return (
         <>
          <nav className="flex text-reg border-b pb-2">
-          <Link href="/restaurant/milestone-grill" className="mr-7"> Overview </Link>
-          <Link  href="/restaurant/milestone-grill/menu" className="mr-7"> Menu </Link>
+          <Link href={`/restaurant/${props.slug}`} className="mr-7"> Overview </Link>
+          <Link  href={`/restaurant/${props.slug}/menu`} className="mr-7"> Menu </Link>
         </nav>
         
         

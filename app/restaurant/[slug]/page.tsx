@@ -5,35 +5,63 @@ import RestaurnatNavBar from "./components/RestaurantNavBar";
 import Title from "./components/Title";
 import { Rating } from "./components/Rating";
 import { Description } from "./components/Description";
-import { Images } from "./components/Images";
+import Images  from "./components/Images";
 import { Reviews } from "./components/Reviews";
 import { ReservationCard } from "./components/ReservationCard";
+import supabase from "../../config/supabaseClient";
 
-export default function RestaurantDetail() {
+
+interface IDATA {
+  name: string;
+  id: number;
+  main_image: string;
+  images: string[];
+  description: string;
+  open_time: string;
+  close_time: string;
+  slug: string;
+  price: string;
+  items: string[];
+  location_id: number;
+  cuisine_id: number;
+}
+
+
+
+
+
+
+
+const RestaurantDetail = async (slug: any) => {
+  const fetchData: any = await supabase
+    .from("restaurants")
+    .select(`* , cuisine(*), location(*)`)
+    .eq("slug", `${slug.params.slug}`);
+   
+   
+    const data: IDATA = fetchData?.data[0];
+   
     return (
       <>
 
-    {/* NAVBAR */} {/* HEADER */}
-  
-    {/* HEADER */} {/* DESCRIPTION PORTION */}
+ 
    
       <div className="bg-white w-[70%] rounded p-3 shadow">
-        {/* RESAURANT NAVBAR */}
-       <RestaurnatNavBar/>
-        {/* RESAURANT NAVBAR */} {/* TITLE */}
-          <Title/>
-        {/* TITLE */} {/* RATING */}
+        
+       <RestaurnatNavBar slug={data.slug}/>
+        
+          <Title title={data?.name}/>
+        
         <Rating/>
-        {/* RATING */}
-         {/* DESCRIPTION */}
-          <Description/>
+        
+          <Description description={data?.description}/>
 
-        {/* DESCRIPTION */}
-        <Images/>
+        
+        <Images images={data.images}/>
 
-        {/* IMAGES */} {/* REVIEWS */}
+       
         <Reviews/>
-        {/* REVIEWS */}
+       
       </div>
       <div className="w-[27%] relative text-reg">
        <ReservationCard/>
@@ -44,3 +72,5 @@ export default function RestaurantDetail() {
 
     )
 }
+
+export default RestaurantDetail;

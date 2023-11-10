@@ -1,7 +1,11 @@
 import React from 'react'
 import MenuCard from './MenuCard'
 
-export const Menus = () => {
+type Props = {
+  items: string[];
+};
+
+export const Menus = (props: Props) => {
   return (
         <>
         <main className="bg-white mt-5">
@@ -10,7 +14,7 @@ export const Menus = () => {
               <h1 className="font-bold text-4xl">Menu</h1>
             </div>
             <div className="flex flex-wrap justify-between">
-              <MenuCard/>
+              <MenuCard items={props.items}/>
             </div>
           </div>
         </main>
